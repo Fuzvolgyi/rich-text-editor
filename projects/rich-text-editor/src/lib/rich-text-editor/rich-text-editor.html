@@ -1,0 +1,117 @@
+<div class="rte">
+	<div class="rte__toolbar" role="toolbar" aria-label="Text formatting">
+		@if (toolbar().bold) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('bold')"
+				type="button"
+				title="Bold (Ctrl+B)"
+				aria-label="Bold"
+				(mousedown)="$event.preventDefault()"
+				(click)="onBold()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+			</button>
+		}
+		@if (toolbar().italic) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('italic')"
+				type="button"
+				title="Italic (Ctrl+I)"
+				aria-label="Italic"
+				(mousedown)="$event.preventDefault()"
+				(click)="onItalic()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+			</button>
+		}
+		@if (toolbar().underline) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('underline')"
+				type="button"
+				title="Underline (Ctrl+U)"
+				aria-label="Underline"
+				(mousedown)="$event.preventDefault()"
+				(click)="onUnderline()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg>
+			</button>
+		}
+		@if (toolbar().bold || toolbar().italic || toolbar().underline) {
+			<span class="rte__divider"></span>
+		}
+		@if (toolbar().heading) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('heading')"
+				type="button"
+				title="Heading"
+				aria-label="Heading"
+				(mousedown)="$event.preventDefault()"
+				(click)="onHeading()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><path d="M4 12h16M4 4v16M20 4v16"/></svg>
+			</button>
+		}
+		@if (toolbar().unorderedList) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('unorderedList')"
+				type="button"
+				title="Bullet list"
+				aria-label="Bullet list"
+				(mousedown)="$event.preventDefault()"
+				(click)="onUnorderedList()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5"/><circle cx="4" cy="12" r="1.5"/><circle cx="4" cy="18" r="1.5"/></svg>
+			</button>
+		}
+		@if (toolbar().orderedList) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('orderedList')"
+				type="button"
+				title="Numbered list"
+				aria-label="Numbered list"
+				(mousedown)="$event.preventDefault()"
+				(click)="onOrderedList()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><text x="3" y="8" font-size="7" fill="currentColor">1</text><text x="3" y="14" font-size="7" fill="currentColor">2</text><text x="3" y="20" font-size="7" fill="currentColor">3</text></svg>
+			</button>
+		}
+		@if (toolbar().link) {
+			<button
+				class="rte__btn"
+				[class.rte__btn--active]="isActive('link')"
+				type="button"
+				title="Insert link"
+				aria-label="Insert link"
+				(mousedown)="$event.preventDefault()"
+				(click)="onLink()">
+				<svg class="rte__icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+			</button>
+		}
+	</div>
+
+	<div
+		#editor
+		class="rte__content"
+		contenteditable="true"
+		role="textbox"
+		aria-multiline="true"
+		[attr.aria-placeholder]="placeholder()"
+		[attr.data-placeholder]="placeholder()"
+		[attr.contenteditable]="!disabled()"
+		(focus)="onFocus()"
+		(blur)="onBlur()"
+		(input)="onInput()"
+		(keydown)="onKeydown($event)"
+		(paste)="onPaste($event)"
+		(mouseup)="onSelectionChange()"
+		(keyup)="onSelectionChange()">
+	</div>
+
+	@if (maxLength() > 0) {
+		<div class="rte__footer">
+			<span class="rte__char-count" [class.rte__char-count--over]="charCount() > maxLength()">
+				{{ charCount() }} / {{ maxLength() }}
+			</span>
+		</div>
+	}
+</div>

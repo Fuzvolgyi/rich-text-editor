@@ -1,0 +1,141 @@
+.rte {
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	overflow: hidden;
+	transition: border-color 150ms ease;
+
+	:host(.rte--focused) & {
+		border-color: #006565;
+		box-shadow: 0 0 0 3px rgba(0, 101, 101, 0.1);
+	}
+
+	:host(.rte--disabled) & {
+		opacity: 0.6;
+		pointer-events: none;
+	}
+
+	&__toolbar {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		padding: 6px 8px;
+		background: #f9fafb;
+		border-bottom: 1px solid #e5e7eb;
+		flex-wrap: wrap;
+	}
+
+	&__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		border: none;
+		border-radius: 6px;
+		background: transparent;
+		color: #4b5563;
+		cursor: pointer;
+		transition: background 150ms ease, color 150ms ease;
+
+		&:hover {
+			background: #e5e7eb;
+			color: #111827;
+		}
+
+		&--active {
+			background: #006565;
+			color: #ffffff;
+
+			&:hover {
+				background: #005252;
+			}
+		}
+	}
+
+	&__icon {
+		width: 16px;
+		height: 16px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	&__divider {
+		width: 1px;
+		height: 20px;
+		background: #d1d5db;
+		margin: 0 4px;
+	}
+
+	&__content {
+		min-height: 120px;
+		max-height: 400px;
+		overflow-y: auto;
+		padding: 12px 16px;
+		font-family: inherit;
+		font-size: 14px;
+		line-height: 1.6;
+		color: #1f2937;
+		outline: none;
+
+		&:empty::before {
+			content: attr(data-placeholder);
+			color: #9ca3af;
+			pointer-events: none;
+		}
+
+		p {
+			margin: 0 0 8px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		a {
+			color: #006565;
+			text-decoration: underline;
+		}
+
+		ul, ol {
+			margin: 8px 0;
+			padding-left: 24px;
+		}
+
+		li {
+			margin-bottom: 4px;
+		}
+
+		h3 {
+			font-size: 18px;
+			font-weight: 600;
+			margin: 16px 0 8px;
+			line-height: 1.3;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		padding: 4px 12px;
+		border-top: 1px solid #e5e7eb;
+		background: #f9fafb;
+	}
+
+	&__char-count {
+		font-size: 11px;
+		color: #6b7280;
+
+		&--over {
+			color: #dc2626;
+			font-weight: 600;
+		}
+	}
+}

@@ -1,0 +1,7 @@
+{
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "dest": "../../dist/rich-text-editor",
+  "allowedNonPeerDependencies": []
+}
