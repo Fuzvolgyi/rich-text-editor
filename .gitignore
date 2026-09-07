@@ -3,3 +3,8 @@ dist/
 out-tsc/
 .angular/
 *.tsbuildinfo
+.env
+.env.*
+!.env.example
+.npmrc
+/.kiro

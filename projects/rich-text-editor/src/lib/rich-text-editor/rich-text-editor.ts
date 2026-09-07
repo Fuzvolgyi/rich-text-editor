@@ -6,6 +6,7 @@ import {
 	output,
 	signal,
 	viewChild,
+	ViewEncapsulation,
 	AfterViewInit,
 	OnDestroy,
 } from '@angular/core';
@@ -17,6 +18,7 @@ import { RteToolbarConfig, RteChangeEvent, DEFAULT_TOOLBAR_CONFIG } from '../mod
 	standalone: true,
 	templateUrl: './rich-text-editor.html',
 	styleUrl: './rich-text-editor.scss',
+	encapsulation: ViewEncapsulation.None,
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -257,10 +259,19 @@ export class RichTextEditorComponent implements ControlValueAccessor, AfterViewI
 		if (html === '<br>' || html === '<div><br></div>') {
 			return '';
 		}
-		return html
-			.replace(/<div>/gi, '<p>')
-			.replace(/<\/div>/gi, '</p>')
-			.replace(/<p><br><\/p>/gi, '')
-			.trim();
+
+		const temp = document.createElement('div');
+		temp.innerHTML = html;
+
+		const topLevelDivs = Array.from(temp.children).filter(
+			(child) => child.tagName === 'DIV' && !child.closest('ul') && !child.closest('ol')
+		);
+		for (const div of topLevelDivs) {
+			const p = document.createElement('p');
+			p.innerHTML = div.innerHTML;
+			div.replaceWith(p);
+		}
+
+		return temp.innerHTML.replace(/<p><br><\/p>/gi, '').trim();
 	}
 }
